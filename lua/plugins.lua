@@ -3,62 +3,184 @@ function SetupPlugins()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- -- Simple plugins can be specified as strings
-  -- use '9mm/vim-closer'
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    opt = true
+  }
 
-  -- -- Lazy loading:
-  -- -- Load on specific commands
-  -- use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
+  use 'tpope/vim-commentary'
+  use 'tpope/vim-repeat'
+  use 'tpope/vim-surround'
+  use 'kristijanhusak/vim-multiple-cursors'
+  use 'tpope/vim-fugitive'
+  use 'jreybert/vimagit'
+  use 'mhinz/vim-signify' -- lewis6991/gitsigns.nvim ?
+  use 'junegunn/gv.vim'
+  use 'MattesGroeger/vim-bookmarks'
 
-  -- -- Load on an autocommand event
-  -- use {'andymass/vim-matchup', event = 'VimEnter'}
+  use { 'eagletmt/neco-ghc', ft = { 'haskell' } }
+  use { 'dag/vim2hs', ft = { 'haskell' } }
+  use { 'Twinside/vim-hoogle', ft = { 'haskell' } }
+  use { 'cloudhead/neovim-ghcid', ft = { 'haskell' } }
+  use { 'alx741/vim-hindent', ft = { 'haskell' } }
+  use { 'parsonsmatt/intero-neovim', ft = { 'haskell' } }
+  use { 'neovimhaskell/haskell-vim', ft = { 'haskell' } }
+  use { 'eagletmt/ghcmod-vim', ft = { 'haskell' } }
 
-  -- -- Load on a combination of conditions: specific filetypes or commands
-  -- -- Also run code after load (see the "config" key)
-  -- use {
-  --   'w0rp/ale',
-  --   ft = {'sh', 'zsh', 'bash', 'c', 'cpp', 'cmake', 'html', 'markdown', 'racket', 'vim', 'tex'},
-  --   cmd = 'ALEEnable',
-  --   config = 'vim.cmd[[ALEEnable]]'
-  -- }
+  use 'LnL7/vim-nix'
 
-  -- -- Plugins can have dependencies on other plugins
-  -- use {
-  --   'haorenW1025/completion-nvim',
-  --   opt = true,
-  --   requires = {{'hrsh7th/vim-vsnip', opt = true}, {'hrsh7th/vim-vsnip-integ', opt = true}}
-  -- }
+  use {
+    'mg979/vim-visual-multi',
+    branch = 'master'
+  }
 
-  -- -- You can specify rocks in isolation
-  -- use_rocks 'penlight'
-  -- use_rocks {'lua-resty-http', 'lpeg'}
+  use {
+    'plasticboy/vim-markdown'
+  }
 
-  -- -- Plugins can have post-install/update hooks
-  -- use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
+  use 'hashivim/vim-terraform'
+  use 'sheerun/vim-polyglot'
+  use 'alvan/vim-closetag'
 
-  -- -- Post-install/update hook with neovim command
-  -- use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use 'w0rp/ale'
 
-  -- -- Post-install/update hook with call of vimscript function with argument
-  -- use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
+  use {
+    'fatih/vim-go', 
+    ft = { 'go' },
+    run = ':GoUpdateBinaries' 
+  }
 
-  -- -- Use specific branch, dependency and run lua file after load
-  -- use {
-  --   'glepnir/galaxyline.nvim', branch = 'main', config = function() require'statusline' end,
-  --   requires = {'kyazdani42/nvim-web-devicons'}
-  -- }
+  use {
+    'metakirby5/codi.vim',
+    ft = { 'python', 'javascript', 'typescript', 'ghci', 'lua', 'julia', 'elm', 'elixir' }
+  }
 
-  -- -- Use dependency and run lua function after load
-  -- use {
-  --   'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
-  --   config = function() require('gitsigns').setup() end
-  -- }
+  use {
+    'tmhedberg/SimpylFold',
+    ft = { 'python' },
+  }
 
-  -- -- You can specify multiple plugins in a single call
-  -- use {'tjdevries/colorbuddy.vim'}
+  -- Rust
+  use {
+   'racer-rust/vim-racer',
+   ft = { "rust" }
+  }
+  use {
+   'rust-lang/rust.vim',
+   ft = { "rust" }
+  
+  }
+  use {
+   'leafgarland/typescript-vim',
+   ft = { "typescript" }
+  }
+  use {
+   'HerringtonDarkholme/yats.vim',
+   ft = { "typescript" }
+ }
+  
 
-  -- -- You can alias plugin names
-  -- use {'dracula/vim', as = 'dracula'}
+  -- elixir plugins
+  use {
+    'elixir-editors/vim-elixir',
+    ft = { 'elixir' }
+  }
+  use {
+    'carlosgaldino/elixir-snippets',
+    ft = { 'elixir' }
+  }
+  use {
+    'avdgaag/vim-phoenix',
+    ft = { 'elixir' }
+  }
+  use {
+    'mmorearty/elixir-ctags',
+    ft = { 'elixir' }
+  }
+  use {
+    'mattreduce/vim-mix',
+    ft = { 'elixir' }
+  }
+  use {
+    'BjRo/vim-extest',
+    ft = { 'elixir' }
+  }
+  use {
+    'frost/vim-eh-docs',
+    ft = { 'elixir' }
+  }
+
+
+  use 'editorconfig/editorconfig-vim'
+  use 'sbdchd/neoformat'
+  use 'godlygeek/tabular'
+
+  use 'luochen1990/rainbow'
+  use 'jeffkreeftmeijer/vim-numbertoggle'
+  use 'sainnhe/everforest'
+  use 'lifepillar/vim-gruvbox8'
+  use 'machakann/vim-highlightedyank'
+  use 'karb94/neoscroll.nvim'
+
+  use {
+      'lukas-reineke/indent-blankline.nvim',
+      branch = "lua",
+  }
+
+  use 'hoob3rt/lualine.nvim'
+
+  use {
+      'nvim-telescope/telescope.nvim',
+      requires = {
+          'nvim-lua/popup.nvim',
+          'nvim-lua/plenary.nvim'
+      }
+  }
+
+
+  use 'vim-test/vim-test'
+
+  use 'szw/vim-maximizer'
+  use 'hrsh7th/nvim-compe'
+
+  use 'folke/which-key.nvim'
+  use 'vifm/vifm.vim'
+
+  use {
+    'neoclide/coc.nvim',
+    branch = 'release'
+  }
+
+  use 'akinsho/nvim-bufferline.lua'
+  -- use 'romgrk/barbar.nvim'
+  use 'ntpeters/vim-better-whitespace'
+  use 'ap/vim-css-color'
 end
+
+local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
+if not packer_exists then
+	if vim.fn.input("Install packer.nvim? (y for yada)") ~= "y" then
+		return
+	end
+
+	local directory = string.format(
+	'%s/site/pack/packer/opt/',
+	vim.fn.stdpath('data')
+	)
+
+	vim.fn.mkdir(directory, 'p')
+
+	local git_clone_cmd = vim.fn.system(string.format(
+	'git clone %s %s',
+	'https://github.com/wbthomason/packer.nvim',
+	directory .. '/packer.nvim'
+	))
+
+	print(git_clone_cmd)
+	print("Installing packer.nvim...")
+
+	return
+end
+
 
 return require('packer').startup(SetupPlugins)

@@ -1,0 +1,10 @@
+{
+  "diagnostic.displayByAle": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "javascript",
+    "markdown",
+    "typescript"
+  ],
+  "prettier.requireConfig": true
+}
