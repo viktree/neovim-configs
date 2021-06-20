@@ -14,9 +14,10 @@ function SetupPlugins()
   use 'kristijanhusak/vim-multiple-cursors'
   use 'tpope/vim-fugitive'
   use 'jreybert/vimagit'
-  use 'mhinz/vim-signify' -- lewis6991/gitsigns.nvim ?
+  -- use 'mhinz/vim-signify' -- lewis6991/gitsigns.nvim ?
   use 'junegunn/gv.vim'
   use 'MattesGroeger/vim-bookmarks'
+  use 'honza/vim-snippets'
 
   use { 'eagletmt/neco-ghc', ft = { 'haskell' } }
   use { 'dag/vim2hs', ft = { 'haskell' } }
@@ -68,17 +69,17 @@ function SetupPlugins()
   use {
    'rust-lang/rust.vim',
    ft = { "rust" }
-  
+
   }
-  use {
-   'leafgarland/typescript-vim',
-   ft = { "typescript" }
-  }
-  use {
-   'HerringtonDarkholme/yats.vim',
-   ft = { "typescript" }
- }
-  
+
+
+   use { 'HerringtonDarkholme/yats.vim', ft = { "typescript" } }
+   use { 'pangloss/vim-javascript', ft = { 'typescript' } }
+   use { 'leafgarland/typescript-vim', ft = { "typescript" } }
+   use { 'peitalin/vim-jsx-typescript', ft = { "typescript" } }
+   use { 'styled-components/vim-styled-components', branch='main', ft = { "typescript" } }
+   use { 'jparise/vim-graphql', ft = { "graphql" } }
+
 
   -- elixir plugins
   use {
@@ -120,7 +121,15 @@ function SetupPlugins()
   use 'sainnhe/everforest'
   use 'lifepillar/vim-gruvbox8'
   use 'machakann/vim-highlightedyank'
+  use 'RRethy/vim-illuminate'
   use 'karb94/neoscroll.nvim'
+
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    }
+  }
 
   use {
       'lukas-reineke/indent-blankline.nvim',

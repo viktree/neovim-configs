@@ -130,6 +130,7 @@ call plug#end()
 " }}}
 lua require('plugins')
 lua require('statusline')
+lua require('versionControl')
 autocmd BufWritePost plugins.lua PackerCompile
 set mouse=a
 "
@@ -186,23 +187,6 @@ nnoremap <C-H> <C-W><C-H>
 " Buffers
 nnoremap <S-h> :bprevious<CR>
 nnoremap <S-l> :bnext<CR>
-
-" }}}
-" version control {{{
-
-let g:signify_mapping_next_hunk = '<leader>gn'
-let g:signify_mapping_prev_hunk = '<leader>gp'
-
-let g:signify_sign_add               = '▏'
-let g:signify_sign_delete            = '┊'
-let g:signify_sign_change            = '▏'
-let g:signify_sign_change_delete     = '▏'
-let g:signify_sign_delete_first_line = '▏'
-
-let g:signify_sign_show_count = 0
-let g:signify_sign_show_text  = 1
-
-let g:magit_default_fold_level = 0
 
 " }}}
 " bookmarks {{{
@@ -300,6 +284,9 @@ augroup file_associations
   autocmd BufRead,BufNewFile *.tikz     setlocal filetype=tex        syntax =tex
   autocmd BufRead,BufNewFile *.pdf_tex  setlocal filetype=tex        syntax =tex
   autocmd BufRead,BufNewFile .latexmkrc setlocal filetype=perl       syntax =perl
+
+  autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+  autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 augroup END
 
 augroup filetype_settings
@@ -472,27 +459,27 @@ function SetColors(theme)
     highlight clear Folded
     highlight clear SignColumn
 
+    highlight def link LspReferenceText  CursorLine
+    highlight def link LspReferenceWrite CursorLine
+    highlight def link LspReferenceRead  CursorLine
+
     highlight Comment cterm=italic
-    highlight ExtraWhitespace              ctermbg=gray
-    highlight ALEErrorSign                 ctermbg=NONE ctermfg=red
-    highlight ALEWarningSign               ctermbg=NONE ctermfg=yellow
-    highlight Folded                       ctermbg=NONE ctermfg=gray
-    highlight LineNr                       ctermbg=NONE ctermfg=gray
-    highlight Normal                       ctermbg=NONE
-    highlight NonText                      ctermbg=NONE
-    highlight EndOfBuffer                  ctermbg=NONE
+    highlight ExtraWhitespace  ctermbg=gray
 
-    highlight SignifyLineAdd               ctermbg=NONE ctermfg=green
-    highlight SignifyLineChange            ctermbg=NONE ctermfg=blue
-    highlight SignifyLineDelete            ctermbg=black ctermfg=red
-    highlight SignifyLineDeleteFirstLine   ctermbg=black ctermfg=red
-    highlight SignifySignAdd               ctermbg=NONE ctermfg=green
-    highlight SignifySignChange            ctermbg=NONE ctermfg=blue
-    highlight SignifySignDelete            ctermbg=NONE ctermfg=red
-    highlight SignifySignDeleteFirstLine   ctermbg=NONE ctermfg=red
+    highlight ALEErrorSign   ctermbg=NONE ctermfg=red
+    highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+    highlight Folded         ctermbg=NONE ctermfg=gray
+    highlight LineNr         ctermbg=NONE ctermfg=gray
+    highlight Normal         ctermbg=NONE
+    highlight NonText        ctermbg=NONE
+    highlight EndOfBuffer    ctermbg=NONE
 
-    highlight BookmarkSign                 ctermbg=NONE ctermfg=blue
-    highlight BookmarkLine                 ctermbg=NONE ctermfg=blue
+    highlight GitSignsAdd    ctermbg=NONE  ctermfg=green
+    highlight GitSignsChange ctermbg=NONE  ctermfg=blue
+    highlight GitSignsDelete ctermbg=NONE  ctermfg=red
+
+    highlight BookmarkSign ctermbg=NONE ctermfg=blue
+    highlight BookmarkLine ctermbg=NONE ctermfg=blue
 endfunction
 
 "}}}
@@ -500,6 +487,8 @@ endfunction
 
 let mapleader      = "\<SPACE>"
 let maplocalleader = ","
+
+let g:magit_default_fold_level = 0
 
 noremap <leader>gs :MagitOnly<CR>
 
