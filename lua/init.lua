@@ -10,10 +10,8 @@ local use_icons = false
 
 -- general settings {{{
 
-cmd([[
-set mouse=a
-let g:rainbow_active   = 1
-]])
+cmd('set mouse=a')
+cmd('let g:rainbow_active = 1')
 
 -- clipboards {{{
 

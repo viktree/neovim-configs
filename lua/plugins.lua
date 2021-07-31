@@ -10,13 +10,25 @@ function SetupPlugins()
 -- editor essentials {{{
 use 'editorconfig/editorconfig-vim'
 use 'ntpeters/vim-better-whitespace'
+use 'lambdalisue/suda.vim'
 --}}}
 
--- text object plugins {{{
+-- profiling {{{
+
+use {
+  "dstein64/vim-startuptime",
+  cmd = "StartupTime"
+}
+
+-- }}}
+
+-- more vim like {{{
 
 use 'tpope/vim-commentary'
 use 'tpope/vim-repeat'
 use 'tpope/vim-surround'
+
+use 'tversteeg/registers.nvim'
 
 -- }}}
 
@@ -53,6 +65,7 @@ use 'jeffkreeftmeijer/vim-numbertoggle'
 use 'machakann/vim-highlightedyank'
 use 'RRethy/vim-illuminate'
 use 'karb94/neoscroll.nvim'
+use 'folke/todo-comments.nvim'
 
 -- }}}
 
@@ -66,9 +79,15 @@ use {
 }
 use 'tpope/vim-fugitive'
 use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+use 'sindrets/diffview.nvim'
 
 -- }}}
 
+-- filetype specific {{{
+
+-- css {{{
+use 'norcalli/nvim-colorizer.lua'
+-- }}}
 -- haskell {{{
 use { 'eagletmt/neco-ghc', ft = { 'haskell' } }
 use { 'dag/vim2hs', ft = { 'haskell' } }
@@ -79,16 +98,18 @@ use { 'parsonsmatt/intero-neovim', ft = { 'haskell' } }
 use { 'neovimhaskell/haskell-vim', ft = { 'haskell' } }
 use { 'eagletmt/ghcmod-vim', ft = { 'haskell' } }
 
+-- }}}
 -- nix {{{
 
 use { 'LnL7/vim-nix', ft = { 'nix' } }
 
 -- }}}
-
 -- rust {{{
 
 use { 'racer-rust/vim-racer', ft = { "rust" } }
 use { 'rust-lang/rust.vim', ft = { "rust" } }
+
+-- }}}
 
 -- }}}
 
