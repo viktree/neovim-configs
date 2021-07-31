@@ -4,7 +4,8 @@
     "css",
     "javascript",
     "markdown",
-    "typescript"
+    "typescript",
+    "rust"
   ],
   "prettier.requireConfig": true
 }
