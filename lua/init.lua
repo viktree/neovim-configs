@@ -93,6 +93,15 @@ local vcConfig = {
   use_internal_diff = true,  -- If luajit is present
 }
 require('gitsigns').setup(vcConfig)
+
+local neogitConfig = {
+  integrations = {
+    diffview = true
+  }
+}
+
+require('neogit').setup(neogitConfig)
+
 -- }}}
 
 -- file management {{{

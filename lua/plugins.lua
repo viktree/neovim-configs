@@ -78,8 +78,13 @@ use {
   }
 }
 use 'tpope/vim-fugitive'
-use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
-use 'sindrets/diffview.nvim'
+use {
+  'TimUntersberger/neogit',
+  requires = {
+    'nvim-lua/plenary.nvim',
+    'sindrets/diffview.nvim'
+  }
+}
 
 -- }}}
 
