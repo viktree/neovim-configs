@@ -138,7 +138,7 @@ if exists('g:vscode')
 " load lua-based configs {{{
 else
 
-lua require('init')
+lua require('config')
 autocmd BufWritePost plugins.lua PackerCompile
 
 endif

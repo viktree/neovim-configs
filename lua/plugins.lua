@@ -10,7 +10,15 @@ function SetupPlugins()
 -- editor essentials {{{
 use 'editorconfig/editorconfig-vim'
 use 'ntpeters/vim-better-whitespace'
+use 'direnv/direnv.vim'
+
+-- sudo
 use 'lambdalisue/suda.vim'
+
+-- lsp
+use 'neovim/nvim-lspconfig'
+use 'onsails/lspkind-nvim'
+use 'nvim-lua/lsp-status.nvim'
 --}}}
 
 -- profiling {{{
@@ -27,6 +35,9 @@ use {
 use 'tpope/vim-commentary'
 use 'tpope/vim-repeat'
 use 'tpope/vim-surround'
+use 'tpope/vim-eunuch'
+use 'tpope/vim-endwise'
+use 'tpope/vim-sleuth'
 
 use 'tversteeg/registers.nvim'
 
@@ -36,6 +47,18 @@ use 'tversteeg/registers.nvim'
 
 use 'godlygeek/tabular'
 use 'alvan/vim-closetag'
+
+-- }}}
+
+-- autocomplete {{{
+
+ -- Autocomplete
+use 'hrsh7th/nvim-compe'
+use 'SirVer/ultisnips'
+use 'honza/vim-snippets'
+use 'windwp/nvim-autopairs'
+use 'AndrewRadev/tagalong.vim'
+use 'andymass/vim-matchup'
 
 -- }}}
 
@@ -51,9 +74,14 @@ use {
 
 -- }}}
 
+-- testing {{{
+use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
+-- }}}
+
 -- look pretty {{{
 
 use 'sainnhe/everforest'
+use { 'christianchiarulli/nvcode-color-schemes.vim' }
 
 use 'nvim-treesitter/nvim-treesitter'
 use 'sheerun/vim-polyglot'
@@ -89,6 +117,8 @@ use {
 -- }}}
 
 -- filetype specific {{{
+
+use 'sbdchd/neoformat'
 
 -- css {{{
 use 'norcalli/nvim-colorizer.lua'

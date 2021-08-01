@@ -4,14 +4,16 @@
 require('lib')
 
 local cmd = vim.cmd
+local setoption = vim.opt
+local letg = vim.g
 
-local colorscheme = 'everforest'
+local colorscheme = 'onedark'
 local use_icons = false
 
 -- general settings {{{
 
-cmd('set mouse=a')
-cmd('let g:rainbow_active = 1')
+setoption.mouse = 'a'
+letg.rainbow_active = 1
 
 -- clipboards {{{
 
@@ -106,6 +108,8 @@ require('neogit').setup(neogitConfig)
 
 -- file management {{{
 
+vim.g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*' }
+
 cmd([[
 if executable('vifm')
   let g:vifm_replace_netrw = 1
@@ -156,7 +160,7 @@ cmd("call SetColors('" .. colorscheme .. "')")
 -- }}}
 
 -- statusline {{{
-local config = {
+local statuslineConfig = {
   options = {
     icons_enabled = use_icons,
     theme = colorscheme,
@@ -165,14 +169,14 @@ local config = {
   sections = {
     lualine_a = {'mode', 'paste' },
     lualine_b = {'filename', 'readonly', 'modified'},
-    lualine_c = { },
+    lualine_c = {},
     lualine_x = {'branch', 'b:gitsigns_status' },
     lualine_y = {'location'},
     lualine_z = {'filetype'}
   },
 }
 
-require('lualine').setup(config)
+require('lualine').setup(statuslineConfig)
 -- }}}
 
 -- termimal mode {{{
@@ -274,30 +278,9 @@ vnoremap <leader>/ :s/
 
 -- }}}
 
--- old configs {{{
+-- bookmarks {{{
 
 cmd([[
-"
-" tabs {{{
-"
-" Set 'tabstop' and 'shiftwidth' to whatever you prefer and use 'expandtab'.
-" This way you will always insert spaces. The formatting will never be
-" messed up when 'tabstop' is changed.
-set expandtab autoindent smartindent
-
- function! SetTabSize(size)
-   execute "setlocal tabstop=".a:size
-   execute "setlocal shiftwidth=".a:size
- endfunction
-
- let g:indentLine_char = '│'
-
-" }}}
-" keybindings {{{
-
-
-" }}}
-" bookmarks {{{
 let g:bookmark_auto_close = 1
 let g:bookmark_sign = '♥'
 let g:bookmark_annotation_sign = '☰'
@@ -332,8 +315,13 @@ elseif !empty(glob('.yadm/bootstrap'))
   command! Yadm  e .yadm/bootstrap
 endif
 
-"}}}
-" file associations {{{
+]])
+
+-- }}}
+
+-- file associations {{{
+
+cmd([[
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
@@ -360,39 +348,173 @@ augroup file_associations
   autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 augroup END
 
-augroup filetype_settings
-  autocmd!
-  autocmd Filetype c call SetTabSize(4)
-
-  autocmd Filetype cpp call SetTabSize(4)
-
-  autocmd Filetype go call SetTabSize(4)
-
-  autocmd Filetype make call SetTabSize(8)
-
-  autocmd Filetype markdown setlocal spell nofoldenable nonumber norelativenumber
-
-  autocmd Filetype python call SetTabSize(4)
-  autocmd FileType python setlocal textwidth=79 colorcolumn=81
-
-  autocmd Filetype typescript call SetTabSize(2)
-
-  autocmd Filetype vim call SetTabSize(2)
-augroup END
-
-" }}}
-" typescript {{{
-let g:yats_host_keyword = 1
-
-augroup filetype_typescript
-  autocmd!
-  " autocmd BufWritePre,TextChanged,InsertLeave *.ts,*.tsx PrettierAsync
-augroup END
-
-" }}}
- "
 ]])
 
+-- }}}
+
+-- linting {{{
+
+letg.ale_completion_enabled = 1
+letg.ale_completion_autoimport = 1
+
+-- }}}
+
+-- lsp {{{
+
+local nvim_lsp = require('lspconfig')
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+local lspKindConfig = {
+  with_text = true,
+  symbol_map = {
+  }
+}
+
+require('lspkind').init(lspKindConfig)
+
+-- Diagnostics symbols for display in the sign column.
+cmd('sign define LspDiagnosticsSignError text=')
+cmd('sign define LspDiagnosticsSignWarning text=')
+cmd('sign define LspDiagnosticsSignInformation text=')
+cmd('sign define LspDiagnosticsSignHint text=')
+cmd('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
+
+-- local linters = {
+--     eslint = {
+--         sourceName = "eslint",
+--         command = "eslint_d",
+--         rootPatterns = {".eslintrc.js", "package.json"},
+--         debounce = 100,
+--         args = {"--stdin", "--stdin-filename", "%filepath", "--format", "json"},
+--         parseJson = {
+--             errorsRoot = "[0].messages",
+--             line = "line",
+--             column = "column",
+--             endLine = "endLine",
+--             endColumn = "endColumn",
+--             message = "${message} [${ruleId}]",
+--             security = "severity"
+--         },
+--         securities = {[2] = "error", [1] = "warning"}
+--     }
+-- }
+
+-- nvim_lsp.diagnosticls.setup {
+--   on_attach = on_attach,
+--   filetypes = vim.tbl_keys(filetypes),
+--   init_options = {
+--     filetypes = {
+--       typescript = "prettier",
+--       typescriptreact = "prettier"
+--     },
+--     formatters = {
+--       prettier = {command = "prettier", args = {"--stdin-filepath", "%filepath"}}
+--     },
+--     formatFiletypes = {
+--       typescript = "prettier",
+--       typescriptreact = "prettier"
+--     }
+--   }
+-- }
+
+nvim_lsp.tsserver.setup{
+  on_attach = function(client)
+    client.resolved_capabilities.document_formatting = false
+    on_attach(client)
+  end
+}
+
+nvim_lsp.cssls.setup{
+  capabilities = capabilities,
+}
+
+nvim_lsp.jsonls.setup{
+  commands = {
+    Format = {
+      function()
+        vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
+      end
+    }
+  }
+}
+
+local lsp_status = require('lsp-status')
+lsp_status.register_progress()
+local lspconfig = require('lspconfig')
+
+-- Some arbitrary servers
+lspconfig.clangd.setup({
+  handlers = lsp_status.extensions.clangd.setup(),
+  init_options = {
+    clangdFileStatus = true
+  },
+  on_attach = lsp_status.on_attach,
+  capabilities = lsp_status.capabilities
+})
+
+lspconfig.ghcide.setup({
+  on_attach = lsp_status.on_attach,
+  capabilities = lsp_status.capabilities
+})
+lspconfig.rust_analyzer.setup({
+  on_attach = lsp_status.on_attach,
+  capabilities = lsp_status.capabilities
+})
+
+-- }}}
+
+-- completion {{{
+
+vim.api.nvim_exec([[
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+]], true)
+
+require'compe'.setup {
+  enabled = true,
+  autocomplete = true,
+  debug = false,
+  min_length = 1,
+  preselect = 'enable',
+  throttle_time = 80,
+  source_timeout = 200,
+  incomplete_delay = 400,
+  max_abbr_width = 100,
+  max_kind_width = 100,
+  max_menu_width = 100,
+  documentation = true,
+
+  source = {
+    path = true,
+    treesitter = true,
+    nvim_lsp = true,
+    omni = false,
+    buffer = true,
+    tags = true,
+    spell = false,
+    calc = false,
+    ultisnips =  true
+  }
+}
+
+local function t(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+function _G.smart_tab()
+  return vim.fn.pumvisible() == 1 and t'<C-n>' or t'<Tab>'
+end
+
+vim.api.nvim_set_keymap('i', '<Tab>', 'v:lua.smart_tab()', {expr = true, noremap = true})
+
+-- }}}
+
+-- old configs {{{
+cmd([[let g:indentLine_char = '│']])
 -- }}}
 
 -------------------------------------------------------------------------------------------
