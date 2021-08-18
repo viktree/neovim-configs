@@ -16,9 +16,17 @@ use 'direnv/direnv.vim'
 use 'lambdalisue/suda.vim'
 
 -- lsp
+-- use 'w0rp/ale'
 use 'neovim/nvim-lspconfig'
 use 'onsails/lspkind-nvim'
 use 'nvim-lua/lsp-status.nvim'
+
+-- leader key bindings
+use 'folke/which-key.nvim'
+
+-- cursors
+-- use 'kristijanhusak/vim-multiple-cursors'
+
 --}}}
 
 -- profiling {{{
@@ -62,7 +70,10 @@ use 'andymass/vim-matchup'
 
 -- }}}
 
--- telescope {{{
+-- switch files {{{
+
+use 'MattesGroeger/vim-bookmarks'
+use 'vifm/vifm.vim'
 
 use {
     'nvim-telescope/telescope.nvim',
@@ -123,7 +134,13 @@ use 'sbdchd/neoformat'
 -- css {{{
 use 'norcalli/nvim-colorizer.lua'
 -- }}}
+-- graphql {{{
+
+use { 'jparise/vim-graphql', ft = { "graphql" } }
+
+-- }}}
 -- haskell {{{
+--
 use { 'eagletmt/neco-ghc', ft = { 'haskell' } }
 use { 'dag/vim2hs', ft = { 'haskell' } }
 use { 'Twinside/vim-hoogle', ft = { 'haskell' } }
@@ -132,6 +149,16 @@ use { 'alx741/vim-hindent', ft = { 'haskell' } }
 use { 'parsonsmatt/intero-neovim', ft = { 'haskell' } }
 use { 'neovimhaskell/haskell-vim', ft = { 'haskell' } }
 use { 'eagletmt/ghcmod-vim', ft = { 'haskell' } }
+
+-- }}}
+-- idris {{{
+
+use 'edwinb/idris2-vim'
+
+-- }}}
+-- markdown {{{
+
+use 'plasticboy/vim-markdown'
 
 -- }}}
 -- nix {{{
@@ -145,43 +172,28 @@ use { 'racer-rust/vim-racer', ft = { "rust" } }
 use { 'rust-lang/rust.vim', ft = { "rust" } }
 
 -- }}}
-
--- }}}
-
--- other plugins {{{
-  -- use 'kristijanhusak/vim-multiple-cursors'
-  -- 
-  -- use 'junegunn/gv.vim'
-  -- use 'MattesGroeger/vim-bookmarks'
-  -- use 'honza/vim-snippets'
-
-  -- use {
-  --   'mg979/vim-visual-multi',
-  --   branch = 'master'
-  -- }
-
-  -- use {
-  --   'plasticboy/vim-markdown'
-  -- }
-
-  -- use 'w0rp/ale'
-
+-- typescript {{{
 
  use { 'HerringtonDarkholme/yats.vim', ft = { "typescript" } }
  use { 'pangloss/vim-javascript', ft = { 'typescript' } }
  use { 'leafgarland/typescript-vim', ft = { "typescript" } }
  use { 'peitalin/vim-jsx-typescript', ft = { "typescript" } }
  use { 'styled-components/vim-styled-components', branch='main', ft = { "typescript" } }
- use { 'jparise/vim-graphql', ft = { "graphql" } }
 
+-- }}}
 
+-- }}}
+
+-- other plugins {{{
+  -- use 'junegunn/gv.vim'
+  -- use 'honza/vim-snippets'
+  -- use {
+  --   'mg979/vim-visual-multi',
+  --   branch = 'master'
+  -- }
   -- use 'vim-test/vim-test'
-
-  -- use 'szw/vim-maximizer'
   -- use 'hrsh7th/nvim-compe'
 
-  use 'folke/which-key.nvim'
-  use 'vifm/vifm.vim'
 -- }}}
 
 -- footer {{{
