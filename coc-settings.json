@@ -2,10 +2,16 @@
   "diagnostic.displayByAle": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
+    "graphql"
     "javascript",
+    "javascriptreact",
+    "json",
     "markdown",
+    "python",
+    "rust",
     "typescript",
-    "rust"
+    "typescript.tsx",
+    "typescriptreact",
   ],
   "prettier.requireConfig": true
 }
