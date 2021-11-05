@@ -67,7 +67,6 @@ if exists('g:vscode')
  command! Fix                call VSCodeNotify('keyboard-quickfix.openQuickFix')
  command! Reload             call VSCodeNotify('workbench.action.reloadWindow')
  command! Print              call VSCodeNotify('print-it.PrintIt')
- " command! Browse             call VSCodeNotify('file-browser.open')
  command! GStatus            call VSCodeNotify('magit.status')
  command! GCommit            call VSCodeNotify('extension.conventionalCommits')
  command! BToggle            call VSCodeNotify('bookmarks.toggle')
@@ -77,7 +76,6 @@ if exists('g:vscode')
  command! BList              call VSCodeNotify('bookmarks.listFromAllFiles')
  command! Unique             call VSCodeNotify('unique-lines.keepUnique')
 
- command! Unique             call VSCodeNotify('unique-lines.keepUnique')
  nmap <silent> <BS> :Find<CR>
  nmap <silent> <Tab> :tabn<CR>
  nmap <silent> <S-Tab> :tabp<CR>
@@ -92,46 +90,6 @@ if exists('g:vscode')
  AlterCommand o[pen] Find
 
  let mapleader = "\<SPACE>"
-
- " THEME CHANGER
- function! SetCursorLineNrColorInsert(mode)
-   " Insert mode: blue
-   if a:mode == "i"
-     call VSCodeNotify('nvim-theme.insert')
-
-     " Replace mode: red
-     " elseif a:mode == "r"
-     "     call VSCodeNotify('nvim-theme.replace')
-   endif
- endfunction
-
-
- function! SetCursorLineNrColorVisual()
-   set updatetime=0
-   call VSCodeNotify('nvim-theme.visual')
- endfunction
-
- vnoremap <silent> <expr> <SID>SetCursorLineNrColorVisual SetCursorLineNrColorVisual()
- nnoremap <silent> <script> v v<SID>SetCursorLineNrColorVisual
- nnoremap <silent> <script> V V<SID>SetCursorLineNrColorVisual
- nnoremap <silent> <script> <C-v> <C-v><SID>SetCursorLineNrColorVisual
-
- function! SetCursorLineNrColorVisual()
-   set updatetime=0
-   call VSCodeNotify('nvim-theme.visual')
- endfunction
-
- vnoremap <silent> <expr> <SID>SetCursorLineNrColorVisual SetCursorLineNrColorVisual()
- nnoremap <silent> <script> v v<SID>SetCursorLineNrColorVisual
- nnoremap <silent> <script> V V<SID>SetCursorLineNrColorVisual
- nnoremap <silent> <script> <C-v> <C-v><SID>SetCursorLineNrColorVisual
-
- augroup CursorLineNrColorSwap
-   autocmd!
-   autocmd InsertEnter * call SetCursorLineNrColorInsert(v:insertmode)
-   autocmd InsertLeave * call VSCodeNotify('nvim-theme.normal')
-   autocmd CursorHold  * call VSCodeNotify('nvim-theme.normal')
- augroup END
 
 " }}}
 

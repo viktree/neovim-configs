@@ -16,16 +16,12 @@ use 'direnv/direnv.vim'
 use 'lambdalisue/suda.vim'
 
 -- lsp
--- use 'w0rp/ale'
 use 'neovim/nvim-lspconfig'
 use 'onsails/lspkind-nvim'
 use 'nvim-lua/lsp-status.nvim'
 
 -- leader key bindings
 use 'folke/which-key.nvim'
-
--- cursors
--- use 'kristijanhusak/vim-multiple-cursors'
 
 --}}}
 
@@ -91,14 +87,14 @@ use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRem
 
 -- look pretty {{{
 
-use 'sainnhe/everforest'
-use { 'christianchiarulli/nvcode-color-schemes.vim' }
+-- use 'sainnhe/everforest'
+-- use { 'christianchiarulli/nvcode-color-schemes.vim' }
+use { 'sainnhe/gruvbox-material' }
 
-use 'nvim-treesitter/nvim-treesitter'
-use 'sheerun/vim-polyglot'
+-- use 'nvim-treesitter/nvim-treesitter'
+-- use 'sheerun/vim-polyglot'
 use 'hoob3rt/lualine.nvim'
 
-use { 'lukas-reineke/indent-blankline.nvim' }
 use 'luochen1990/rainbow'
 use 'jeffkreeftmeijer/vim-numbertoggle'
 use 'machakann/vim-highlightedyank'
