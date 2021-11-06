@@ -3,238 +3,233 @@
 
 -- header {{{
 function SetupPlugins()
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
--- }}}
+    -- Packer can manage itself
+    use "wbthomason/packer.nvim"
+    -- }}}
 
--- editor essentials {{{
-use 'editorconfig/editorconfig-vim'
-use 'ntpeters/vim-better-whitespace'
-use 'direnv/direnv.vim'
+    -- editor essentials {{{
+    use "editorconfig/editorconfig-vim"
+    use "ntpeters/vim-better-whitespace"
+    use "direnv/direnv.vim"
 
--- sudo
-use 'lambdalisue/suda.vim'
+    -- sudo
+    use "lambdalisue/suda.vim"
 
--- lsp
-use 'neovim/nvim-lspconfig'
-use 'onsails/lspkind-nvim'
-use 'nvim-lua/lsp-status.nvim'
+    -- lsp
+    use "neovim/nvim-lspconfig"
+    use "onsails/lspkind-nvim"
+    use "nvim-lua/lsp-status.nvim"
 
--- lsp typescript
-use "jose-elias-alvarez/null-ls.nvim"
-use "jose-elias-alvarez/nvim-lsp-ts-utils"
+    -- lsp typescript
+    use "jose-elias-alvarez/null-ls.nvim"
+    use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
--- leader key bindings
-use 'folke/which-key.nvim'
+    -- leader key bindings
+    use "folke/which-key.nvim"
 
---}}}
+    --}}}
 
--- profiling {{{
+    -- profiling {{{
 
-use {
-  "dstein64/vim-startuptime",
-  cmd = "StartupTime"
-}
-
--- }}}
-
--- more vim like {{{
-
-use 'tpope/vim-commentary'
-use 'tpope/vim-repeat'
-use 'tpope/vim-surround'
-use 'tpope/vim-eunuch'
-use 'tpope/vim-endwise'
-use 'tpope/vim-sleuth'
-
-use 'tversteeg/registers.nvim'
-
--- }}}
-
--- text manipulation {{{
-
-use 'godlygeek/tabular'
-use 'alvan/vim-closetag'
-
--- }}}
-
--- autocomplete {{{
-
- -- Autocomplete
-use 'hrsh7th/nvim-compe'
-use 'SirVer/ultisnips'
-use 'honza/vim-snippets'
-use 'windwp/nvim-autopairs'
-use 'AndrewRadev/tagalong.vim'
-use 'andymass/vim-matchup'
-
--- }}}
-
--- switch files {{{
-
-use 'MattesGroeger/vim-bookmarks'
-use 'vifm/vifm.vim'
-
-use {
-    'nvim-telescope/telescope.nvim',
-    requires = {
-        'nvim-lua/popup.nvim',
-        'nvim-lua/plenary.nvim'
+    use {
+        "dstein64/vim-startuptime",
+        cmd = "StartupTime"
     }
-}
 
--- }}}
+    -- }}}
 
--- testing {{{
-use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
--- }}}
+    -- more vim like {{{
 
--- look pretty {{{
+    use "tpope/vim-commentary"
+    use "tpope/vim-repeat"
+    use "tpope/vim-surround"
+    use "tpope/vim-eunuch"
+    use "tpope/vim-endwise"
+    use "tpope/vim-sleuth"
 
--- use 'sainnhe/everforest'
--- use { 'christianchiarulli/nvcode-color-schemes.vim' }
-use { 'sainnhe/gruvbox-material' }
+    use "tversteeg/registers.nvim"
 
-use 'nvim-treesitter/nvim-treesitter'
-use 'sheerun/vim-polyglot'
-use 'hoob3rt/lualine.nvim'
+    -- }}}
 
-use 'luochen1990/rainbow'
-use 'jeffkreeftmeijer/vim-numbertoggle'
-use 'machakann/vim-highlightedyank'
-use 'RRethy/vim-illuminate'
-use 'karb94/neoscroll.nvim'
-use 'folke/todo-comments.nvim'
+    -- text manipulation {{{
 
--- }}}
+    use "godlygeek/tabular"
+    use "alvan/vim-closetag"
 
--- version control {{{
+    -- }}}
 
-use {
-  'lewis6991/gitsigns.nvim',
-  requires = {
-    'nvim-lua/plenary.nvim'
-  },
-}
+    -- autocomplete {{{
 
-use 'tpope/vim-fugitive'
-use {
-  'TimUntersberger/neogit',
-  requires = {
-    'nvim-lua/plenary.nvim',
-    'sindrets/diffview.nvim'
-  }
-}
+    -- Autocomplete
+    use "hrsh7th/nvim-compe"
+    use "SirVer/ultisnips"
+    use "honza/vim-snippets"
+    use "windwp/nvim-autopairs"
+    use "AndrewRadev/tagalong.vim"
+    use "andymass/vim-matchup"
 
-use 'kdheepak/lazygit.nvim'
+    -- }}}
 
--- }}}
+    -- switch files {{{
 
--- filetype specific {{{
+    use "MattesGroeger/vim-bookmarks"
+    use "vifm/vifm.vim"
 
-use 'sbdchd/neoformat'
-
--- css {{{
-use 'norcalli/nvim-colorizer.lua'
--- }}}
--- graphql {{{
-
-use { 'jparise/vim-graphql', ft = { "graphql" } }
-
--- }}}
--- haskell {{{
---
-use { 'eagletmt/neco-ghc', ft = { 'haskell' } }
-use { 'dag/vim2hs', ft = { 'haskell' } }
-use { 'Twinside/vim-hoogle', ft = { 'haskell' } }
-use { 'cloudhead/neovim-ghcid', ft = { 'haskell' } }
-use { 'alx741/vim-hindent', ft = { 'haskell' } }
-use { 'parsonsmatt/intero-neovim', ft = { 'haskell' } }
-use { 'neovimhaskell/haskell-vim', ft = { 'haskell' } }
-use { 'eagletmt/ghcmod-vim', ft = { 'haskell' } }
-
--- }}}
--- idris {{{
-
-use 'edwinb/idris2-vim'
-
--- }}}
--- markdown {{{
-
-use 'plasticboy/vim-markdown'
-
--- }}}
--- nix {{{
-
-use { 'LnL7/vim-nix', ft = { 'nix' } }
-
--- }}}
--- rust {{{
-
-use { 'racer-rust/vim-racer', ft = { "rust" } }
-use { 'rust-lang/rust.vim', ft = { "rust" } }
-
--- }}}
--- typescript {{{
-
- use { 'HerringtonDarkholme/yats.vim', ft = { "typescript" } }
- use { 'pangloss/vim-javascript', ft = { 'typescript' } }
- use { 'leafgarland/typescript-vim', ft = { "typescript" } }
- use { 'peitalin/vim-jsx-typescript', ft = { "typescript" } }
- use { 'styled-components/vim-styled-components', branch='main', ft = { "typescript" } }
-
--- }}}
-
--- }}}
-
--- other plugins {{{
-
--- Lua
-use {
-  "folke/trouble.nvim",
-  requires = "kyazdani42/nvim-web-devicons",
-  config = function()
-    require("trouble").setup {
-      icons = false,
-      fold_open = "v",
-      fold_closed = ">",
-      indent_lines = false,
-      signs = {
-        error = "error",
-        warning = "warn",
-        hint = "hint",
-        information = "info"
-      },
-      use_lsp_diagnostic_signs = false
+    use {
+        "nvim-telescope/telescope.nvim",
+        requires = {
+            "nvim-lua/popup.nvim",
+            "nvim-lua/plenary.nvim"
+        }
     }
-  end
-}
 
+    -- }}}
 
+    -- testing {{{
+    use {"rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins"}
+    -- }}}
 
+    -- look pretty {{{
 
+    -- use 'sainnhe/everforest'
+    -- use { 'christianchiarulli/nvcode-color-schemes.vim' }
+    use {"sainnhe/gruvbox-material"}
 
--- if use nvim-web-devicons
-use {
-  'yamatsum/nvim-nonicons',
-  requires = {'kyazdani42/nvim-web-devicons'}
-}
+    use "nvim-treesitter/nvim-treesitter"
+    use "sheerun/vim-polyglot"
+    use "hoob3rt/lualine.nvim"
 
-  -- use 'junegunn/gv.vim'
-  -- use 'honza/vim-snippets'
-  -- use {
-  --   'mg979/vim-visual-multi',
-  --   branch = 'master'
-  -- }
-  -- use 'vim-test/vim-test'
-  -- use 'hrsh7th/nvim-compe'
+    use "luochen1990/rainbow"
+    use "jeffkreeftmeijer/vim-numbertoggle"
+    use "machakann/vim-highlightedyank"
+    use "RRethy/vim-illuminate"
+    use "karb94/neoscroll.nvim"
+    use "folke/todo-comments.nvim"
 
--- }}}
+    -- }}}
 
--- footer {{{
+    -- version control {{{
+
+    use {
+        "lewis6991/gitsigns.nvim",
+        requires = {
+            "nvim-lua/plenary.nvim"
+        }
+    }
+
+    use "tpope/vim-fugitive"
+    use {
+        "TimUntersberger/neogit",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "sindrets/diffview.nvim"
+        }
+    }
+
+    use "kdheepak/lazygit.nvim"
+
+    -- }}}
+
+    -- filetype specific {{{
+
+    use "sbdchd/neoformat"
+
+    -- css {{{
+    use "norcalli/nvim-colorizer.lua"
+    -- }}}
+    -- graphql {{{
+
+    use {"jparise/vim-graphql", ft = {"graphql"}}
+
+    -- }}}
+    -- haskell {{{
+    --
+    use {"eagletmt/neco-ghc", ft = {"haskell"}}
+    use {"dag/vim2hs", ft = {"haskell"}}
+    use {"Twinside/vim-hoogle", ft = {"haskell"}}
+    use {"cloudhead/neovim-ghcid", ft = {"haskell"}}
+    use {"alx741/vim-hindent", ft = {"haskell"}}
+    use {"parsonsmatt/intero-neovim", ft = {"haskell"}}
+    use {"neovimhaskell/haskell-vim", ft = {"haskell"}}
+    use {"eagletmt/ghcmod-vim", ft = {"haskell"}}
+
+    -- }}}
+    -- idris {{{
+
+    use "edwinb/idris2-vim"
+
+    -- }}}
+    -- markdown {{{
+
+    use "plasticboy/vim-markdown"
+
+    -- }}}
+    -- nix {{{
+
+    use {"LnL7/vim-nix", ft = {"nix"}}
+
+    -- }}}
+    -- rust {{{
+
+    use {"racer-rust/vim-racer", ft = {"rust"}}
+    use {"rust-lang/rust.vim", ft = {"rust"}}
+
+    -- }}}
+    -- typescript {{{
+
+    use {"HerringtonDarkholme/yats.vim", ft = {"typescript"}}
+    use {"pangloss/vim-javascript", ft = {"typescript"}}
+    use {"leafgarland/typescript-vim", ft = {"typescript"}}
+    use {"peitalin/vim-jsx-typescript", ft = {"typescript"}}
+    use {"styled-components/vim-styled-components", branch = "main", ft = {"typescript"}}
+
+    -- }}}
+
+    -- }}}
+
+    -- other plugins {{{
+
+    -- Lua
+    use {
+        "folke/trouble.nvim",
+        requires = "kyazdani42/nvim-web-devicons",
+        config = function()
+            require("trouble").setup {
+                icons = false,
+                fold_open = "v",
+                fold_closed = ">",
+                indent_lines = false,
+                signs = {
+                    error = "error",
+                    warning = "warn",
+                    hint = "hint",
+                    information = "info"
+                },
+                use_lsp_diagnostic_signs = false
+            }
+        end
+    }
+
+    -- if use nvim-web-devicons
+    use {
+        "yamatsum/nvim-nonicons",
+        requires = {"kyazdani42/nvim-web-devicons"}
+    }
+
+    -- use 'junegunn/gv.vim'
+    -- use 'honza/vim-snippets'
+    -- use {
+    --   'mg979/vim-visual-multi',
+    --   branch = 'master'
+    -- }
+    -- use 'vim-test/vim-test'
+    -- use 'hrsh7th/nvim-compe'
+
+    -- }}}
+
+    -- footer {{{
 end
 
-return require('packer').startup(SetupPlugins)
+return require("packer").startup(SetupPlugins)
 
 --- }}}
-
