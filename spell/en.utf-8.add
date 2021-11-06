@@ -1,0 +1,7 @@
+config
+nestjs
+digikare
+pino
+typeorm
+salesforce
+minLoggingLevel
