@@ -20,6 +20,10 @@ use 'neovim/nvim-lspconfig'
 use 'onsails/lspkind-nvim'
 use 'nvim-lua/lsp-status.nvim'
 
+-- lsp typescript
+use "jose-elias-alvarez/null-ls.nvim"
+use "jose-elias-alvarez/nvim-lsp-ts-utils"
+
 -- leader key bindings
 use 'folke/which-key.nvim'
 
@@ -91,8 +95,8 @@ use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRem
 -- use { 'christianchiarulli/nvcode-color-schemes.vim' }
 use { 'sainnhe/gruvbox-material' }
 
--- use 'nvim-treesitter/nvim-treesitter'
--- use 'sheerun/vim-polyglot'
+use 'nvim-treesitter/nvim-treesitter'
+use 'sheerun/vim-polyglot'
 use 'hoob3rt/lualine.nvim'
 
 use 'luochen1990/rainbow'
@@ -110,8 +114,9 @@ use {
   'lewis6991/gitsigns.nvim',
   requires = {
     'nvim-lua/plenary.nvim'
-  }
+  },
 }
+
 use 'tpope/vim-fugitive'
 use {
   'TimUntersberger/neogit',
@@ -120,6 +125,8 @@ use {
     'sindrets/diffview.nvim'
   }
 }
+
+use 'kdheepak/lazygit.nvim'
 
 -- }}}
 
@@ -181,6 +188,38 @@ use { 'rust-lang/rust.vim', ft = { "rust" } }
 -- }}}
 
 -- other plugins {{{
+
+-- Lua
+use {
+  "folke/trouble.nvim",
+  requires = "kyazdani42/nvim-web-devicons",
+  config = function()
+    require("trouble").setup {
+      icons = false,
+      fold_open = "v",
+      fold_closed = ">",
+      indent_lines = false,
+      signs = {
+        error = "error",
+        warning = "warn",
+        hint = "hint",
+        information = "info"
+      },
+      use_lsp_diagnostic_signs = false
+    }
+  end
+}
+
+
+
+
+
+-- if use nvim-web-devicons
+use {
+  'yamatsum/nvim-nonicons',
+  requires = {'kyazdani42/nvim-web-devicons'}
+}
+
   -- use 'junegunn/gv.vim'
   -- use 'honza/vim-snippets'
   -- use {
