@@ -87,6 +87,7 @@ function SetupPlugins()
 
     -- testing {{{
     use {"rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins"}
+    use 'David-Kunz/jester'
     -- }}}
 
     -- look pretty {{{
@@ -136,6 +137,11 @@ function SetupPlugins()
 
     -- css {{{
     use "norcalli/nvim-colorizer.lua"
+    -- }}}
+    --- golang {{{
+
+    use {"fatih/vim-go", ft = {"go"}}
+
     -- }}}
     -- graphql {{{
 
@@ -187,7 +193,22 @@ function SetupPlugins()
 
     -- }}}
 
-    -- other plugins {{{
+-- tabout {{{
+
+use {
+  'abecodes/tabout.nvim',
+	wants = {'nvim-treesitter'}, -- or require if not used so far
+}
+
+-- }}}
+
+-- other plugins {{{
+
+    use {
+      'filipdutescu/renamer.nvim',
+      branch = 'master',
+      requires = { {'nvim-lua/plenary.nvim'} }
+    }
 
     -- Lua
     use {

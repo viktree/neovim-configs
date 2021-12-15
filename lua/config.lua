@@ -92,7 +92,7 @@ local vcConfig = {
     },
     numhl = false,
     linehl = false,
-    current_line_blame = true,
+    current_line_blame = false,
     current_line_blame_delay = 1000,
     current_line_blame_position = "eol",
     sign_priority = 6,
@@ -444,6 +444,11 @@ nvim_lsp.ghcide.setup(
     }
 )
 -- }}}
+-- go {{{
+
+nvim_lsp.gopls.setup({})
+
+-- }}}
 -- jsonls {{{
 nvim_lsp.jsonls.setup {
     commands = {
@@ -539,6 +544,8 @@ nvim_lsp["null-ls"].setup({on_attach = on_attach})
 
 -- completions {{{
 
+require("tabout").setup({})
+
 setoption.completeopt = "menuone,noselect"
 
 compe.setup(
@@ -601,6 +608,15 @@ vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+
+-- }}}
+
+-- refactoring {{{
+
+local renamer = require('renamer')
+renamer.setup({})
+vim.api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
 
 -- }}}
 

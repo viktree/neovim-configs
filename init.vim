@@ -102,4 +102,7 @@ autocmd BufWritePost plugins.lua PackerCompile
 endif
 " }}}
 
+set exrc
+set secure
+
 "----------------------------------------------------------------------------------------
