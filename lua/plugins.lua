@@ -100,7 +100,7 @@ function SetupPlugins()
     use "sheerun/vim-polyglot"
     use "hoob3rt/lualine.nvim"
 
-    use "luochen1990/rainbow"
+    -- use "luochen1990/rainbow"
     use "jeffkreeftmeijer/vim-numbertoggle"
     use "machakann/vim-highlightedyank"
     use "RRethy/vim-illuminate"
@@ -138,7 +138,7 @@ function SetupPlugins()
     -- css {{{
     use "norcalli/nvim-colorizer.lua"
     -- }}}
-    --- golang {{{
+    -- golang {{{
 
     use {"fatih/vim-go", ft = {"go"}}
 

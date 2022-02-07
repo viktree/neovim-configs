@@ -126,6 +126,23 @@ endif
 
 -- }}}
 
+-- treesitter {{{
+
+local treesitterConfig = {
+  ensure_installed = "all",
+  highlight = {
+    enable = true,
+  },
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+  }
+}
+
+require'nvim-treesitter.configs'.setup(treesitterConfig)
+
+-- }}}
+
 -- colorscheme {{{
 
 cmd(

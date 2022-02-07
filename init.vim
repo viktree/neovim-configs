@@ -10,6 +10,8 @@
 
 " general settings {{{
 
+set exrc
+
 " Always support UTF-8
 set encoding=utf-8 fileencoding=utf-8 fileencodings=utf-8
 
@@ -50,6 +52,9 @@ if exists('g:vscode')
  xnoremap <silent> <C-h> :call VSCodeNotify('workbench.action.navigateLeft')<CR>
  nnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
  xnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
+
+ nnoremap ; :
+ vnoremap ; :
 
 
  xmap gc  <Plug>VSCodeCommentary
@@ -102,7 +107,11 @@ autocmd BufWritePost plugins.lua PackerCompile
 endif
 " }}}
 
-set exrc
-set secure
+augroup vik_ft
+  au!
+  autocmd BufNewFile,BufRead *.vik   set syntax=Vik
+  autocmd Filetype Vik syn match stupid "app"
+	autocmd Filetype Vik hi stupid ctermbg=Red guibg=Red
+augroup END
 
 "----------------------------------------------------------------------------------------
