@@ -45,10 +45,7 @@ function SetupPlugins (use)
 			require('nvim-lastplace').setup {}
 		end,
 	}
-	use {
-		'mhinz/vim-sayonara',
-		cmd = { 'Sayonara', 'Sayonara!' }
-	}
+	use 'markonm/traces.vim'
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.0',
 		requires = { {'nvim-lua/plenary.nvim'} }
@@ -111,14 +108,12 @@ function SetupPlugins (use)
 	use { 'shaunsingh/nord.nvim' }
 
 	-- filemanangers
-	use {
-		'luukvbaal/nnn.nvim',
-		config = function() require('nnn').setup() end
-	}
 	use "vifm/vifm.vim"
 
 	use 'nvim-lua/plenary.nvim'
 	use 'windwp/nvim-spectre'
+
+	use 'voldikss/vim-floaterm'
 
 	-- lsp
 	use {

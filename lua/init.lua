@@ -6,6 +6,7 @@
 local vim = vim
 
 vim.cmd [[set termguicolors]]
+vim.cmd [[set inccommand=split]]
 
 -- general autocmd {{{
 
@@ -240,10 +241,6 @@ if executable('vifm')
   let g:vifm_replace_netrw = 1
   nnoremap <bs> :Vifm<cr>
 endif
-
-if executable('vifm')
-  autocmd VimEnter * NnnExplore
-endif
 ]])
 
 -- }}}
@@ -274,9 +271,35 @@ if !empty(glob('$XDG_CONFIG_HOME/yadm/bootstrap'))
 elseif !empty(glob('.yadm/bootstrap'))
   command! Yadm  e .yadm/bootstrap
 endif
+
+if executable('k9s')
+  command! K9s FloatermNew --autoclose=0 k9s
+endif
 ]])
 
 -- }}}
+
+--- aliases {
+
+-- Shortcuts for frequently accessed files
+vim.cmd([[
+
+if executable('k9s')
+  command! K9s FloatermNew --autoclose=0 K9s
+endif
+
+if executable('mprocs')
+  command! Mprocs FloatermNew --autoclose=0 mprocs
+endif
+
+if executable('lazygit')
+  command! Lg FloatermNew --autoclose=0 lazygit
+endif
+
+]])
+
+
+--}
 
 -- colorscheme {{{
 

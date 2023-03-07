@@ -28,7 +28,7 @@ set nohlsearch               " highlight search results
 set inccommand=nosplit       " THIS IS AMAZING! :O
 set gdefault                 " by default, swap out all instances in a line
 
-let mapleader = "\<SPACE>" 
+let mapleader = "\<SPACE>"
 set encoding=utf-8
 set fileencodings=utf-8
 
