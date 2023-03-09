@@ -1,4 +1,4 @@
---  vim: fdm=marker foldlevel=0 foldenable sw=2 ts=2 sts=2
+--  vim: fdm=marker foldlevel=0 foldenable sw=4 ts=4 sts=4
 -------------------------------------------------------------------------------------------
 -- Neovim Configuration
 -------------------------------------------------------------------------------------------
@@ -62,6 +62,8 @@ autocmd filetype markdown setlocal nonumber norelativenumber
 
 -- }}}
 
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua require('nvim-lightbulb').update_lightbulb()]]
+
 -- }}}
 
 -- keybindings {{{
@@ -72,7 +74,7 @@ vim.cmd[[
 ino jj <esc>
 cno jj <c-c>
 
-nnoremap f :lua vim.lsp.buf.code_action()<cr>
+nnoremap f <cmd>CodeActionMenu<cr>
 ]]
 
 -- leader mappings {{{
@@ -83,11 +85,12 @@ local mappings = {
     ["<space>"] = "previous file",
     ["/"] = "replace",
     ["."] = {"<cmd>Neoformat<cr>", "format"},
+    S = {"<cmd>lua require('spectre').open()<cr>", "Spectre search"},
     p = "find-file",
 		d = {
-			name = 'duck',
-			d = 'hatch',
-			k = 'cook'
+			name = 'debug',
+			v = "<cmd>lua require('dapui').open()",
+			d = {'<cmd>DapToggleBreakpoint<cr>', 'toggle'}
 		},
     g = {
         name = "git",
@@ -98,7 +101,6 @@ local mappings = {
       name = "ren ame/grep",
       g = {"<cmd>!rg<cr>", "grep"},
     },
-    s = "telescope command_palette",
     q = "quit"
 }
 
@@ -125,54 +127,12 @@ vnoremap <leader>/ :s/
 
 -- }}}
 
+-- }}}
+
 -- telescope {{{
 
-require('telescope').setup({
-  extensions = {
-    command_palette = {
-      {"File",
-        { "entire selection (C-a)", ':call feedkeys("GVgg")' },
-        { "save current file (C-s)", ':w' },
-        { "save all files (C-A-s)", ':wa' },
-        { "quit (C-q)", ':qa' },
-        { "file browser (C-i)", ":lua require'telescope'.extensions.file_browser.file_browser()", 1 },
-        { "search word (A-w)", ":lua require('telescope.builtin').live_grep()", 1 },
-        { "git files (A-f)", ":lua require('telescope.builtin').git_files()", 1 },
-        { "files (C-f)",     ":lua require('telescope.builtin').find_files()", 1 },
-      },
-      {"Help",
-        { "tips", ":help tips" },
-        { "cheatsheet", ":help index" },
-        { "tutorial", ":help tutor" },
-        { "summary", ":help summary" },
-        { "quick reference", ":help quickref" },
-        { "search help(F1)", ":lua require('telescope.builtin').help_tags()", 1 },
-      },
-      {"Vim",
-				{ "format", ":NeoFormat" },
-        { "reload vimrc", ":source $MYVIMRC" },
-        { 'check health', ":checkhealth" },
-        { "jumps (Alt-j)", ":lua require('telescope.builtin').jumplist()" },
-        { "commands", ":lua require('telescope.builtin').commands()" },
-        { "command history", ":lua require('telescope.builtin').command_history()" },
-        { "registers (A-e)", ":lua require('telescope.builtin').registers()" },
-        { "colorshceme", ":lua require('telescope.builtin').colorscheme()", 1 },
-        { "vim options", ":lua require('telescope.builtin').vim_options()" },
-        { "keymaps", ":lua require('telescope.builtin').keymaps()" },
-        { "buffers", ":Telescope buffers" },
-        { "search history (C-h)", ":lua require('telescope.builtin').search_history()" },
-        { "paste mode", ':set paste!' },
-        { 'cursor line', ':set cursorline!' },
-        { 'cursor column', ':set cursorcolumn!' },
-        { "spell checker", ':set spell!' },
-      }
-    }
-  }
-})
-
-require('telescope').load_extension('command_palette')
-
--- }}}
+require('telescope').setup{
+}
 
 -- }}}
 
@@ -191,6 +151,8 @@ end
 
 local packer_bootstrap = ensure_packer()
 
+require('packer').startup(SetupPlugins)
+
 vim.cmd([[
 augroup packer_user_config
 autocmd!
@@ -198,9 +160,6 @@ autocmd BufWritePost plugins.lua source <afile> | PackerCompile
 augroup end
 ]])
 
-vim.notify = require('notify')
-
-require('packer').startup(SetupPlugins)
 
 require('nvim-autopairs').setup()
 require('nvim-treesitter.configs').setup {
@@ -209,7 +168,6 @@ require('nvim-treesitter.configs').setup {
 	},
 }
 require('spectre').setup()
-vim.cmd [[nnoremap <leader>S <cmd>lua require('spectre').open()<CR>]]
 
 -- }}}
 
@@ -249,7 +207,7 @@ endif
 
 -- Shortcuts for frequently accessed files
 vim.cmd([[
-command! Vimrc e $MYVIMRC
+command! Vimrc e $XDG_CONFIG_HOME/nvim/lua/init.lua
 command! Plugins e $XDG_CONFIG_HOME/nvim/lua/plugins.lua
 command! Leader e $XDG_CONFIG_HOME/nvim/lua/leaderMappings.lua
 command! Reload source $MYVIMRC
@@ -279,9 +237,8 @@ endif
 
 -- }}}
 
---- aliases {
+-- aliases {{{
 
--- Shortcuts for frequently accessed files
 vim.cmd([[
 
 if executable('k9s')
@@ -296,10 +253,21 @@ if executable('lazygit')
   command! Lg FloatermNew --autoclose=0 lazygit
 endif
 
+
+if executable('kubectx')
+  command! Kubectx FloatermNew --autoclose=0 kubectx
+endif
+
+if executable('kubenv')
+  command! Kubenv FloatermNew --autoclose=0 kubenv
+endif
+
+command! Fmt Neoformat
+
 ]])
 
 
---}
+--}}}
 
 -- colorscheme {{{
 
@@ -311,15 +279,6 @@ vim.g.nord_bold = true
 
 require(theme).set()
 vim.cmd[[colorscheme nord]]
-
---require('onedark').setup {
---    style = 'cooldarker'
---}
---require('onedark').load()
-
--- }}}
-
--- statusline {{{
 
 require('lualine').setup {
 	options = {
@@ -377,6 +336,91 @@ lsp.on_attach(function(_, bufnr)
 end)
 
 lsp.setup()
+
+-- }}}
+
+-- dap {{{
+
+require('persistent-breakpoints').setup{
+	load_breakpoints_event = { "BufReadPost" }
+}
+
+require("dapui").setup()
+
+local map = vim.keymap.set
+map('n', ']d', require('goto-breakpoints').next, {})
+map('n', '[d', require('goto-breakpoints').prev, {})
+
+local dap = require('dap')
+dap.adapters.node2 = {
+  type = 'executable',
+  command = 'node',
+  args = {os.getenv('HOME') .. '/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js'},
+}
+dap.configurations.javascript = {
+  {
+    name = 'Launch',
+    type = 'node2',
+    request = 'launch',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
+  },
+  {
+    -- For this to work you need to make sure the node process is started with the `--inspect` flag.
+    name = 'Attach to process',
+    type = 'node2',
+    request = 'attach',
+    processId = require'dap.utils'.pick_process,
+  },
+}
+
+require("dap-vscode-js").setup({
+  -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
+  -- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
+  -- debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
+  adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
+  -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
+  -- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
+  -- log_console_level = vim.log.levels.ERROR -- Logging level for output to console. Set to false to disable console output.
+})
+
+for _, language in ipairs({ "typescript", "javascript" }) do
+  require("dap").configurations[language] = {
+    {
+      type = "pwa-node",
+      request = "launch",
+      name = "Launch file",
+      program = "${file}",
+      cwd = "${workspaceFolder}",
+    },
+    {
+      type = "pwa-node",
+      request = "attach",
+      name = "Attach",
+      processId = require'dap.utils'.pick_process,
+      cwd = "${workspaceFolder}",
+    },
+    {
+      type = "pwa-node",
+      request = "launch",
+      name = "Debug Jest Tests",
+      -- trace = true, -- include debugger info
+      runtimeExecutable = "node",
+      runtimeArgs = {
+        "./node_modules/jest/bin/jest.js",
+        "--runInBand",
+      },
+      rootPath = "${workspaceFolder}",
+      cwd = "${workspaceFolder}",
+      console = "integratedTerminal",
+      internalConsoleOptions = "neverOpen",
+    }
+  }
+end
+
 
 -- }}}
 
