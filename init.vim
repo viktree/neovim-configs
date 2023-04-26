@@ -1,4 +1,7 @@
 
+" vim: fdm=marker foldlevel=0 foldenable sw=4 ts=4 sts=4
+" ---------------------------------------------------------------------------------------
+
 " encodings
 set encoding=utf-8
 set fileencoding=utf-8
@@ -33,11 +36,15 @@ set encoding=utf-8
 set fileencodings=utf-8
 
 if exists('g:vscode')
+
+	" comments {{{
 	xmap gc  <Plug>VSCodeCommentary
 	nmap gc  <Plug>VSCodeCommentary
 	omap gc  <Plug>VSCodeCommentary
 	nmap gcc <Plug>VSCodeCommentaryLine
+	" }}}
 
+	" navigation {{{
 	nnoremap <silent> <C-j> :call VSCodeNotify('workbench.action.navigateDown')<CR>
 	xnoremap <silent> <C-j> :call VSCodeNotify('workbench.action.navigateDown')<CR>
 	nnoremap <silent> <C-k> :call VSCodeNotify('workbench.action.navigateUp')<CR>
@@ -47,14 +54,12 @@ if exists('g:vscode')
 	nnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
 	xnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
 
-	nnoremap ; :
-	vnoremap ; :
+	nmap <silent> <BS> :Find<CR>
+	nmap <silent> <Tab> :tabn<CR>
+	nmap <silent> <S-Tab> :tabp<CR>
+	" }}}
 
-	xmap cm  <Plug>VSCodeCommentary
-	nmap cm  <Plug>VSCodeCommentary
-	omap cm  <Plug>VSCodeCommentary
-	nmap cml <Plug>VSCodeCommentaryLine
-
+	" commands {{{
 	command! Rg call VSCodeNotify('extension.ripgrep')
 	command! Fix call VSCodeNotify('keyboard-quickfix.openQuickFix')
 	command! Reload call VSCodeNotify('workbench.action.reloadWindow')
@@ -62,10 +67,7 @@ if exists('g:vscode')
 	command! GStatus call VSCodeNotify('magit.status')
 	command! GCommit call VSCodeNotify('extension.conventionalCommits')
 	command! Sidebar call VSCodeNotify('multiCommand.toggleSidebar')
-
-	nmap <silent> <BS> :Find<CR>
-	nmap <silent> <Tab> :tabn<CR>
-	nmap <silent> <S-Tab> :tabp<CR>
+	" }}}
 
 	" Redo with U instead of Ctrl+R
 	noremap U <C-R

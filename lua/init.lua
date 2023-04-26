@@ -1,14 +1,285 @@
 --  vim: fdm=marker foldlevel=0 foldenable sw=4 ts=4 sts=4
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 -- Neovim Configuration
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
-local vim = vim
+local theme = "catppuccin"
 
-vim.cmd [[set termguicolors]]
-vim.cmd [[set inccommand=split]]
+vim.opt.termguicolors = true
+vim.opt.cmdheight = 2
+vim.opt.foldenable = true
+vim.cmd [[
+set foldcolumn=2
+]]
+
+local add_neovim_cmd = function (name, action)
+    vim.api.nvim_create_user_command(name, action, {})
+end
+
+local remove_neovim_cmd = function (oldname)
+    vim.api.nvim_create_user_command(oldname, '', {})
+    vim.api.nvim_del_user_command(oldname)
+end
+
+local add_neovim_cmd = function (name, action)
+    vim.api.nvim_create_user_command(name, action, {})
+end
+
+local remove_neovim_cmd = function (oldname)
+    vim.api.nvim_create_user_command(oldname, '', {})
+    vim.api.nvim_del_user_command(oldname)
+end
+
+-- packer {{{
+
+-- ensure packer {{{
+--
+
+local ensure_packer = function()
+    local fn = vim.fn
+    local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system(
+            {
+                "git",
+                "clone",
+                "--depth",
+                "1",
+                "https://github.com/wbthomason/packer.nvim",
+                install_path
+            }
+        )
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
+end
+
+local packer_bootstrap = ensure_packer()
+
+--
+-- }}}
+
+function SetupPlugins(use)
+    use "wbthomason/packer.nvim"
+
+    use "direnv/direnv.vim"
+
+    -- colorscheme {{{
+    --
+    use "shaunsingh/nord.nvim"
+    --
+    -- }}}
+
+    -- copilot {{{
+    --
+    use "github/copilot.vim"
+    --
+    -- }}}
+
+    -- debugging {{{
+    --
+    use "mfussenegger/nvim-dap"
+    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+    use "Weissle/persistent-breakpoints.nvim"
+    use "ofirgall/goto-breakpoints.nvim"
+    use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
+    use {
+        "microsoft/vscode-js-debug",
+        opt = true,
+        run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
+    }
+    --
+    -- }}}
+
+    -- find, replace {{{
+    --
+    use "romainl/vim-cool"
+    use "windwp/nvim-spectre"
+    --
+    -- }}}
+
+    -- file manangers {{{
+    --
+    use "vifm/vifm.vim"
+    --
+    -- }}}
+
+    -- indentation {{{
+
+    use "gpanders/editorconfig.nvim"
+    use "ntpeters/vim-better-whitespace"
+    use "sbdchd/neoformat"
+    use "lukas-reineke/indent-blankline.nvim"
+
+    -- }}}
+
+    -- key bindings {{{
+    --
+    use "folke/which-key.nvim"
+    use "anuvyklack/hydra.nvim"
+    --
+    -- }}}
+
+    -- load things faster {{{
+    --
+    use "lewis6991/impatient.nvim"
+    use {
+        "dstein64/vim-startuptime",
+        cmd = "StartupTime"
+    }
+    use {
+        "ethanholz/nvim-lastplace",
+        config = function()
+            require("nvim-lastplace").setup {}
+        end
+    }
+    --
+    -- }}}
+
+    -- lsp {{{
+    --
+    use {
+        "VonHeikemen/lsp-zero.nvim",
+        requires = {
+            -- LSP Support
+            {"neovim/nvim-lspconfig"},
+            {"williamboman/mason.nvim"},
+            {"williamboman/mason-lspconfig.nvim"},
+            -- Autocompletion
+            {"hrsh7th/nvim-cmp"},
+            {"hrsh7th/cmp-buffer"},
+            {"hrsh7th/cmp-path"},
+            {"saadparwaiz1/cmp_luasnip"},
+            {"hrsh7th/cmp-nvim-lsp"},
+            {"hrsh7th/cmp-nvim-lua"},
+            -- Snippets
+            {"L3MON4D3/LuaSnip"},
+            {"rafamadriz/friendly-snippets"}
+        }
+    }
+    use "onsails/lspkind.nvim"
+    --
+    -- }}}
+
+    -- syntax highlighting {{{
+    --
+    use "sheerun/vim-polyglot"
+    use {
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate"
+    }
+    --
+    -- }}}
+
+    -- testing {{{
+    --
+    use "David-Kunz/jester"
+    --
+    -- }}}
+
+    -- version control {{{
+    --
+    use {
+        "tpope/vim-fugitive",
+        "lewis6991/gitsigns.nvim",
+        {
+            "TimUntersberger/neogit",
+            cmd = "Neogit",
+            config = [[require('config.neogit')]]
+        }
+    }
+    use {"mbbill/undotree"}
+    --
+    -- }}}
+
+    -- visual flair {{{
+    use "nvim-tree/nvim-web-devicons"
+    use "rcarriga/nvim-notify"
+    use "karb94/neoscroll.nvim"
+    use "machakann/vim-highlightedyank"
+    use {"catppuccin/nvim", as = "catppuccin"}
+    use "xiyaowong/transparent.nvim"
+    use {
+        "m4xshen/smartcolumn.nvim",
+        config = function()
+            require("smartcolumn").setup {
+                colorcolumn = {"80", "120"}
+            }
+        end
+    }
+    use {
+        "nvim-lualine/lualine.nvim",
+        requires = { "nvim-tree/nvim-web-devicons", opt = true }
+    }
+    use {
+        "weilbith/nvim-code-action-menu",
+        cmd = "CodeActionMenu"
+    }
+    --
+    -- }}}
+
+    use "chentoast/marks.nvim"
+
+    -- move around faster
+    use "markonm/traces.vim"
+    use {
+        "nvim-telescope/telescope.nvim",
+        tag = "0.2.0",
+        requires = {{"nvim-lua/plenary.nvim"}}
+    }
+    use {
+        "windwp/nvim-autopairs",
+        config = function()
+            require("nvim-autopairs").setup {}
+        end
+    }
+    use "nvim-lua/plenary.nvim"
+    use "voldikss/vim-floaterm"
+    use "kosayoda/nvim-lightbulb"
+    use {
+        "folke/trouble.nvim",
+        requires = "nvim-tree/nvim-web-devicons",
+        config = function()
+            require("trouble").setup {}
+        end
+    }
+
+    use {
+        "numToStr/Comment.nvim",
+        config = function()
+            require("Comment").setup()
+        end
+    }
+
+    -- bootstrap packer {{{
+    --
+    if packer_bootstrap then
+        require("packer").sync()
+    end
+    --
+    -- }}}
+end
+
+require("packer").startup(SetupPlugins)
+
+require("nvim-treesitter.configs").setup {
+    endwise = {enable = true}
+}
+require("spectre").setup()
+
+-- }}}
 
 -- general autocmd {{{
+
+-- packer {{{
+vim.cmd [[
+augroup packer_user_config
+autocmd!
+autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+augroup end
+]]
+-- }}}
 
 -- line numbers {{{
 
