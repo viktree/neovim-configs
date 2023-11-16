@@ -32,8 +32,6 @@ set inccommand=nosplit       " THIS IS AMAZING! :O
 set gdefault                 " by default, swap out all instances in a line
 
 let mapleader = "\<SPACE>"
-set encoding=utf-8
-set fileencodings=utf-8
 
 if exists('g:vscode')
 
@@ -42,17 +40,27 @@ if exists('g:vscode')
 	nmap gc  <Plug>VSCodeCommentary
 	omap gc  <Plug>VSCodeCommentary
 	nmap gcc <Plug>VSCodeCommentaryLine
+
+	xmap cm  <Plug>VSCodeCommentary
+	nmap cm  <Plug>VSCodeCommentary
+	omap cm  <Plug>VSCodeCommentary
+	nmap cml <Plug>VSCodeCommentaryLine
+
+	xmap F :call VSCodeNotify('extension.focus')<cr>
+	vnoremap F :call VSCodeNotify('extension.focus')<cr>
+	xmap F :call VSCodeNotify('extension.focus')<cr>
+	nmap F :call VSCodeNotify('extension.focus')<cr>
 	" }}}
 
 	" navigation {{{
-	nnoremap <silent> <C-j> :call VSCodeNotify('workbench.action.navigateDown')<CR>
-	xnoremap <silent> <C-j> :call VSCodeNotify('workbench.action.navigateDown')<CR>
-	nnoremap <silent> <C-k> :call VSCodeNotify('workbench.action.navigateUp')<CR>
-	xnoremap <silent> <C-k> :call VSCodeNotify('workbench.action.navigateUp')<CR>
-	nnoremap <silent> <C-h> :call VSCodeNotify('workbench.action.navigateLeft')<CR>
-	xnoremap <silent> <C-h> :call VSCodeNotify('workbench.action.navigateLeft')<CR>
-	nnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
-	xnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
+	nnoremap <silent> <leader>j :call VSCodeNotify('workbench.action.navigateDown')<CR>
+	xnoremap <silent> <leader>j :call VSCodeNotify('workbench.action.navigateDown')<CR>
+	nnoremap <silent> <leader>k :call VSCodeNotify('workbench.action.navigateUp')<CR>
+	xnoremap <silent> <leader>k :call VSCodeNotify('workbench.action.navigateUp')<CR>
+	nnoremap <silent> <leader>h :call VSCodeNotify('workbench.action.navigateLeft')<CR>
+	xnoremap <silent> <leader>h :call VSCodeNotify('workbench.action.navigateLeft')<CR>
+	nnoremap <silent> <leader>l :call VSCodeNotify('workbench.action.navigateRight')<CR>
+	xnoremap <silent> <leader>l :call VSCodeNotify('workbench.action.navigateRight')<CR>
 
 	nmap <silent> <BS> :Find<CR>
 	nmap <silent> <Tab> :tabn<CR>
@@ -63,10 +71,24 @@ if exists('g:vscode')
 	command! Rg call VSCodeNotify('extension.ripgrep')
 	command! Fix call VSCodeNotify('keyboard-quickfix.openQuickFix')
 	command! Reload call VSCodeNotify('workbench.action.reloadWindow')
-	command! Qwindow call VSCodeNotify('workbench.action.closeWindow')
-	command! GStatus call VSCodeNotify('magit.status')
+	command! Q call VSCodeNotify('workbench.action.closeWindow')
+	command! Make call VSCodeNotify('extension.conventionalCommits')
+
+	command! G call VSCodeNotify('magit.status')
 	command! GCommit call VSCodeNotify('extension.conventionalCommits')
+	command! GNewBranch call VSCodeNotify('git.branchFrom')
+	command! GSwitchBranch call VSCodeNotify('git.checkout')
+	command! GPull call VSCodeNotify('git.pull')
+	command! GPush call VSCodeNotify('git.push')
+
 	command! Sidebar call VSCodeNotify('multiCommand.toggleSidebar')
+
+	command! Hadd call VSCodeNotify('vscode-harpoon.addEditor')
+	command! Hedit call VSCodeNotify('vscode-harpoon.editEditors')
+	command! Hlist call VSCodeNotify('vscode-harpoon.editorQuickPick')
+
+	command! ProjectAdd call VSCodeNotify('projectManager.saveProject')
+	command! Open call VSCodeNotify('projectManager.listProjects')
 	" }}}
 
 	" Redo with U instead of Ctrl+R
@@ -81,6 +103,5 @@ if exists('g:vscode')
 	" let mapleader = "\<SPACE>"
 	nnoremap <space> :call VSCodeNotify('whichkey.show')<cr>
 else
-	lua require('plugins')
 	lua require('init')
 endif
