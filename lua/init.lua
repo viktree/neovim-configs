@@ -106,6 +106,7 @@ function SetupPlugins(use)
     use "nvim-treesitter/playground"
 
     use {"catppuccin/nvim", as = "catppuccin"}
+    use 'navarasu/onedark.nvim'
 
     -- debugging {{{
     --
@@ -843,7 +844,8 @@ local leaderMapings = {
     j = {
         name = "jump",
         a = {"<Cmd>lua require('harpoon.mark').add_file()<Cr>", "Add"},
-        m = {"<Cmd>lua require('harpoon.ui').toggle_quick_menu()<Cr>", "Menu"}
+        m = {"<Cmd>lua require('harpoon.ui').toggle_quick_menu()<Cr>", "Menu"},
+        b = {"<cmd>Telescope bookmarks list<cr>", "Bookmarks"},
     },
     ["<CR>"] = {"<Cmd>lua require('harpoon.ui').toggle_quick_menu()<Cr>", "harpoon"},
     h = {
@@ -1148,12 +1150,33 @@ local icons = {
 
 -- colorscheme {{{
 
-catppuccin.setup {
-    flavour = "mocha",
-    transparent_background = true
+-- catppuccin.setup {
+--     flavour = "mocha",
+--     transparent_background = true
+-- }
+--
+-- vim.cmd.colorscheme "catppuccin"
+
+local onedark = require "onedark"
+
+onedark.setup = {
+    style = 'cool',
+    transparent = true,
+    term_colors = true,
+    code_style = {
+        comments = 'italic',
+        keywords = 'none',
+        functions = 'none',
+        strings = 'none',
+        variables = 'none'
+    },
+    lualine = {
+        transparent = false,
+    },
 }
 
-vim.cmd.colorscheme "catppuccin"
+onedark.load()
+vim.cmd.colorscheme "onedark"
 
 -- }}}
 
@@ -1162,7 +1185,7 @@ vim.cmd.colorscheme "catppuccin"
 lualine.setup {
     options = {
         icons_enabled = true,
-        theme = "catppuccin",
+        theme = "onedark",
         globalstatus = true,
         component_separators = "|",
         section_separators = {
