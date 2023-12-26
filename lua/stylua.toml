@@ -1,0 +1,6 @@
+quote_style = "AutoPreferDouble"
+call_parentheses = "None"
+collapse_simple_statement = "Always"
+
+[sort_requires]
+enabled = true
